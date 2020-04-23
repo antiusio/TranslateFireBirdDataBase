@@ -1,0 +1,124 @@
+﻿<Window x:Class="TranslateBase.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Core="clr-namespace:TranslateBase.Core" 
+        xmlns:local="clr-namespace:TranslateBase"
+        
+        
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Menu  Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="20">
+            <MenuItem Header="Menu">
+                <MenuItem Header="Translate Geo Countries" Command="{Binding TranslateGeoCountriesCommand}"/>
+                <MenuItem Header="Translate Geo Cities" Command="{Binding TranslateGeoCitiesCommand}"/>
+
+            </MenuItem>
+        </Menu>
+        <TabControl Margin="0,20,0,0" SelectedIndex="{Binding TabIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+            <TabItem Header="Countries">
+                <Grid Background="#FFE5E5E5">
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <ScrollViewer Grid.Row="0" Grid.Column="0"   Core:ScrollSynchronizer.VerticalScrollGroup="V1" VerticalScrollBarVisibility="Hidden" Margin="0,20,0,0">
+                    <DataGrid  Name="Countries" AutoGenerateColumns="False" CanUserAddRows="False" DataContext="{Binding Path=ViewedCountries, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ItemsSource="{Binding}" CanUserSortColumns="False" IsReadOnly="True" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="COUNTRY_ID" Binding="{Binding COUNTRY_ID}" Visibility="Hidden"/>
+                                <DataGridTextColumn Header="COUNTRY_NAME" Binding="{Binding COUNTRY_NAME}"/>
+                            </DataGrid.Columns>
+
+
+                        </DataGrid>
+                    </ScrollViewer>
+                    <ScrollViewer Grid.Row="0" Grid.Column="1"   Core:ScrollSynchronizer.VerticalScrollGroup="V1" Margin="0,20,0,0">
+                        <DataGrid Name="TranslatedCountries" AutoGenerateColumns="False" CanUserAddRows="False" DataContext="{Binding Path=ViewedTranslatedCountries, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ItemsSource="{Binding}" CanUserSortColumns="False"  Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="COUNTRY_ID" Binding="{Binding COUNTRY_ID}" Visibility="Hidden"/>
+                                <DataGridTextColumn Header="COUNTRY_NAME" Binding="{Binding COUNTRY_NAME}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ScrollViewer>
+                    <Label HorizontalAlignment="Left" VerticalAlignment="Top" Content="From base"/>
+                    <Button Grid.Column="0" Grid.ColumnSpan="2" Height="20" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Save to base" Command="{Binding CountriesSaveToBaseCommand}"/>
+                    <Button Grid.Column="0" Grid.ColumnSpan="2" Height="20" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Save to file" Margin="0,0,120,0" Command="{Binding CountriesSaveToFileCommand}"/>
+
+                    <StackPanel Margin="5" Grid.Row="1" Grid.RowSpan="1"  Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Margin="4,0" Content="--" Command="{Binding FirstCommand}"/>
+                        <Button Margin="4,0" Content="-" Command="{Binding PreviousCommand}"/>
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock Text="{Binding Start}"/>
+                            <TextBlock Text=" to "/>
+                            <TextBlock Text="{Binding End}"/>
+                            <TextBlock Text=" of "/>
+                            <TextBlock Text="{Binding TotalItems}"/>
+                        </StackPanel>
+                        <Button Margin="4,0" Content=">" Command="{Binding NextCommand}"/>
+                        <Button Margin="4,0" Content=">>" Command="{Binding LastCommand}"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Cities">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                        <ScrollViewer Grid.Row="0" Grid.Column="0"   Core:ScrollSynchronizer.VerticalScrollGroup="V1" VerticalScrollBarVisibility="Hidden" Margin="0,20,0,0">
+                            <DataGrid  Name="Cities" AutoGenerateColumns="False" CanUserAddRows="False" DataContext="{Binding Path=ViewedCities, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ItemsSource="{Binding}" CanUserSortColumns="False" IsReadOnly="True" Grid.Column="0" Grid.ColumnSpan="1">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="CITY_ID" Binding="{Binding CITY_ID}" Visibility="Hidden"/>
+                                    <DataGridTextColumn Header="RID" Binding="{Binding RID}" Visibility="Hidden"/>
+                                    <DataGridTextColumn Header="CID" Binding="{Binding CID}" Visibility="Hidden"/>
+                                    <DataGridTextColumn Header="CITY_NAME" Binding="{Binding CITY_NAME}"/>
+                                </DataGrid.Columns>
+
+
+                            </DataGrid>
+                        </ScrollViewer>
+                        <ScrollViewer Grid.Row="0" Grid.Column="1"   Core:ScrollSynchronizer.VerticalScrollGroup="V1" Margin="0,20,0,0">
+                            <DataGrid Name="TranslatedCities" AutoGenerateColumns="False" CanUserAddRows="False" DataContext="{Binding Path=ViewedTranslatedCities, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ItemsSource="{Binding}" CanUserSortColumns="False"  Grid.Column="1" Grid.ColumnSpan="1" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="CITY_ID" Binding="{Binding CITY_ID}" Visibility="Hidden"/>
+                                    <DataGridTextColumn Header="RID" Binding="{Binding RID}" Visibility="Hidden"/>
+                                    <DataGridTextColumn Header="CID" Binding="{Binding CID}" Visibility="Hidden"/>
+                                    <DataGridTextColumn Header="CITY_NAME" Binding="{Binding CITY_NAME}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </ScrollViewer>
+                        <Label HorizontalAlignment="Left" VerticalAlignment="Top" Content="From base"/>
+                    <Button Grid.Column="0" Grid.ColumnSpan="2" Height="20" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Save to base" Command="{Binding CitiesSaveToBaseCommand}"/>
+
+                    <Button  Grid.Column="0" Grid.ColumnSpan="2" Height="20" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Save to file" Margin="0,0,120,0" Command="{Binding CitiesSaveToFileCommand}"/>
+                    <StackPanel Margin="5" Grid.Row="1" Grid.RowSpan="1"  Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Margin="4,0" Content="--" Command="{Binding FirstCommand}"/>
+                        <Button Margin="4,0" Content="-" Command="{Binding PreviousCommand}"/>
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock Text="{Binding Start}"/>
+                            <TextBlock Text=" to "/>
+                            <TextBlock Text="{Binding End}"/>
+                            <TextBlock Text=" of "/>
+                            <TextBlock Text="{Binding TotalItems}"/>
+                        </StackPanel>
+                        <Button Margin="4,0" Content=">" Command="{Binding NextCommand}"/>
+                        <Button Margin="4,0" Content=">>" Command="{Binding LastCommand}"/>
+                    </StackPanel>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+        
+    </Grid>
+</Window>
